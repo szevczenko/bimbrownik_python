@@ -21,11 +21,12 @@ class DeviceListener(ServiceListener):
         if name.find(self._name) != -1:
             address = info.parsed_scoped_addresses()[0]
             port = info.port
-            _deviceList.append((address, port))
+            mac = info.properties[b"mac"].decode("utf-8")
+            _deviceList.append((address, port, mac))
             print(f"Service {name} added, ip address: {address}")
 
 
-def FindDeviceIpAddresses(name="Bimbrownik", scanning_time_s=3):
+def ScanDevices(name="Bimbrownik", scanning_time_s=3):
     """Return list of turples: (ip_address: str, port: int) 
         """
     _deviceList.clear()
@@ -38,5 +39,5 @@ def FindDeviceIpAddresses(name="Bimbrownik", scanning_time_s=3):
 
 
 if __name__ == "__main__":
-    result = FindDeviceIpAddresses()
+    result = ScanDevices(name="Production")
     print(result)
